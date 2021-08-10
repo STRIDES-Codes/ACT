@@ -1,0 +1,58 @@
+{
+  "@context": "https://stencila.github.io/schema/context.jsonld",
+  "type": "SoftwareEnvironment",
+  "name": "Improving-Software-FAIRness-and-Reproducibility-with-Automated-Containerization-of-GitHub-Repositori",
+  "softwareRequirements": [
+    {
+      "type": "SoftwarePackage",
+      "name": "Improving-Software-FAIRness-and-Reproducibility-with-Automated-Containerization-of-GitHub-Repositori",
+      "runtimePlatform": "Python",
+      "softwareRequirements": [
+        {
+          "type": "SoftwarePackage",
+          "description": "The argparse module makes it easy to write user friendly command line\ninterfaces.\n\nThe program defines what arguments it requires, and argparse will figure out\nhow to parse those out of sys.argv. The argparse module also automatically\ngenerates help and usage messages and issues errors when users give the\nprogram invalid arguments.\n\nAs of Python >= 2.7 and >= 3.2, the argparse module is maintained within the\nPython standard library. For users who still need to support Python < 2.7 or\n< 3.2, it is also provided as a separate package, which tries to stay\ncompatible with the module in the standard library, but also supports older\nPython versions.\n\nAlso, we can fix bugs here for users who are stuck on some non-current python\nversion, like e.g. 3.2.3 (which has bugs that were fixed in a later 3.2.x\nrelease).\n\nargparse is licensed under the Python license, for details see LICENSE.txt.\n\n\nCompatibility\n-------------\n\nargparse should work on Python >= 2.3, it was tested on:\n\n* 2.3, 2.4, 2.5, 2.6 and 2.7\n* 3.1, 3.2, 3.3, 3.4\n\n\nInstallation\n------------\n\nTry one of these:\n\n    python setup.py install\n\n    easy_install argparse\n\n    pip install argparse\n\n    putting argparse.py in some directory listed in sys.path should also work\n\n\nBugs\n----\n\nIf you find a bug in argparse (pypi), please try to reproduce it with latest\npython 2.7 and 3.4 (and use argparse from stdlib).\n\nIf it happens there also, please file a bug in the python.org issue tracker.\nIf it does not happen there, file a bug in the argparse package issue tracker.",
+          "name": "argparse",
+          "author": [
+            {
+              "type": "Person",
+              "name": "Thomas Waldmann",
+              "email": [
+                "tw@waldmann-edv.de"
+              ],
+              "familyName": [
+                "Waldmann"
+              ],
+              "givenName": [
+                "Thomas"
+              ]
+            }
+          ],
+          "keywords": "argparse command line parser parsing",
+          "license": "Python Software Foundation License",
+          "codeRepository": "https://pypi.org/project/argparse/",
+          "programmingLanguage": [
+            {
+              "type": "ComputerLanguage",
+              "name": "Python"
+            }
+          ],
+          "runtimePlatform": "Python",
+          "applicationCategory": [
+            "Software Development"
+          ]
+        },
+        {
+          "type": "SoftwarePackage",
+          "name": "textwrap",
+          "programmingLanguage": [
+            {
+              "type": "ComputerLanguage",
+              "name": "Python"
+            }
+          ],
+          "runtimePlatform": "Python"
+        }
+      ]
+    }
+  ]
+}
