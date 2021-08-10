@@ -1,5 +1,5 @@
 # Installing docker
-do apt-get update
+sudo apt-get update
 
 sudo apt-get install \
 	apt-transport-https \
