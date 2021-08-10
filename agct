@@ -1,0 +1,211 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+"""AGCT: Automated GitHub Containerization Tool
+About:
+    This is the main entry for agct.
+USAGE:
+	$ agct <build|push> [OPTIONS]
+Example:
+    $ agct build -h
+    $ agct push -h
+"""
+
+from __future__ import print_function
+from src.utils import (initialize,
+    fatal,
+    err,
+    require,
+    permissions)
+import sys, os, subprocess
+import argparse, textwrap
+
+
+__version__ = 'v1.0.0'
+
+
+def bash(cmd, interpreter='/bin/bash', strict=True, **kwargs):
+    """
+    Interface to run a process or bash command. Using subprocess.call_check()
+    due to portability across most python versions. It was introduced in python 2.5
+    and it is also interoperabie across all python 3 versions. 
+    @param cmd <str>:
+        Shell command to run
+    @param interpreter <str>:
+        Interpreter for command to run [default: bash]
+    @pararm strict <bool>:
+        Prefixes any command with 'set -euo pipefail' to ensure process fail with
+        the expected exit-code  
+    @params kwargs <check_call()>:
+        Keyword arguments to modify subprocess.check_call() behavior
+    @return exitcode <int>:
+        Returns the exit code of the run command, failures return non-zero exit codes
+    """
+    # Changes behavior of default shell
+    prefix = ''
+    # set -e: exit immediately upon error
+    # set -u: treats unset variables as an error
+    # set -o pipefail: exits if a error occurs in any point of a pipeline
+    if strict: prefix = 'set -euo pipefail; '
+
+    exitcode = subprocess.check_call(prefix + cmd, shell = True, executable = interpreter, **kwargs)
+
+    if exitcode != 0: 
+        fatal("""\n\tFatal: Failed to run '{}' command!
+        └── Command returned a non-zero exitcode of '{}'.
+        """.format(process, exitcode)
+        )
+
+    return exitcode
+
+
+def build(sub_args):
+    """Creates a Dockerfile for a github repository and build the docker image
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for build sub-command
+    """
+    print(sub_args)
+    pass
+
+def push(sub_args):
+    """Pushes a local docker image to a Docker Registry.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    pass
+
+
+def parsed_arguments():
+    """Parses user-provided command-line arguments. Requires argparse and textwrap
+    package. argparse was added to standard lib in python 3.2 and textwrap was added
+    in python 3.5. To create custom help formatting for subparsers a docstring is
+    used create the help message for required options. argparse does not support named
+    subparser groups, which is normally what would be used to accomphish this reformatting.
+    As so, the help message for require options must be suppressed. If a new required arg
+    is added to a subparser, it must be added to the docstring and the usage statement
+    also must be updated.
+    """
+
+    # Create a top-level parser
+    parser = argparse.ArgumentParser(description = 'AGCT: \
+                                                    Automated GitHub Containerization Tool')
+
+    # Adding Verison information
+    parser.add_argument('--version', action = 'version', version='%(prog)s {}'.format(__version__))
+
+    # Create sub-command parser
+    subparsers = parser.add_subparsers(help='List of available sub-commands')
+
+    # Options for the "build" sub-command
+    # Grouped sub-parser arguments are currently not supported.
+    # https://bugs.python.org/issue9341
+    # Here is a work around to create more useful help message for named
+    # options that are required! Please note: if a required arg is added the
+    # description below should be updated (i.e. update usage and add new option)
+    required_build_options = textwrap.dedent("""\
+        usage: agct build [-h] --repo-url REPO_URL
+                               --img-name IMG_NAME 
+                               --output OUTPUT
+
+        Creates a Dockerfile for a Github repository and builds the 
+        local Docker image. Please see the push sub command to push 
+        a local image to a Docker Registry. The build sub command
+        takes a Github URL and a output directory to clone the Github
+        repository.  
+
+        required arguments:
+          --repo-url REPO_URL   URL of the Github repository to build 
+                                an Docker image.
+
+          --img-name IMG_NAME   Name of the local docker image to be 
+                                built. This image name can be provided 
+                                to the push sub command to push the 
+                                image to a Docker Registry.  
+
+          --output OUTPUT       Path to an output directory. This 
+                                path is where AGCT will clone the 
+                                Github repository and create the 
+                                Dockerfile. If the provided output 
+                                directory does not exist, it will 
+                                be created automatically. 
+                                After the build sub command completes, 
+                                a Dockerfile will be created in the 
+                                user provided output directory and a
+                                local Docker image will be built. 
+        """)
+
+    # Display example usage in epilog
+    build_epilog = textwrap.dedent("""\
+        example:
+          # Step 1.) Create Dockerfile and build the docker image
+          agct build --repo-url https://github.com/CCBR/AAsap \\
+                     --img-name ccbr_aasap \\
+                     --output /home/$USER/scratch/
+
+        version:
+          {}
+        """.format(__version__))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_build = subparsers.add_parser('build',
+                                            help = 'Creates Dockerfile and builds Docker image.',
+                                            usage = argparse.SUPPRESS,
+                                            formatter_class=argparse.RawDescriptionHelpFormatter,
+                                            description = required_build_options,
+                                            epilog = build_epilog)
+    # Input Github URL for build sub command
+    subparser_build.add_argument('--repo-url',
+                                type = str,
+                                required = True,
+                                help = argparse.SUPPRESS)
+    # Name of locally built Docker Image 
+    subparser_build.add_argument('--img-name',
+                                type = str,
+                                required = True,
+                                help = argparse.SUPPRESS)
+    # Output Directory (build working directory)
+    subparser_build.add_argument('--output',
+                                type = lambda option: os.path.abspath(os.path.expanduser(option)),
+                                required = True,
+                                help = argparse.SUPPRESS)
+
+    # Options for the "run" sub-command
+    # Grouped sub-parser arguments are currently not supported by argparse.
+    # https://bugs.python.org/issue9341
+    # Here is a work around to create more useful help message for named
+    # options that are required! Please note: if a required arg is added the
+    # description below should be updated (i.e. update usage and add new option)
+
+    # TODO: ADD parser for push sub command
+
+    # Sanity check for user command line arguments 
+    if len(sys.argv) < 2:
+        parser.error("""\n\t └── Fatal: failed to provide a valid sub command to agct!
+             Please run 'agct  -h' to view more information about agct's usage.""".format(
+                sys.argv[0])
+        )
+
+    # Define handlers for each sub-parser
+    subparser_build.set_defaults(func = build)
+    # subparser_push.set_defaults(func = push)
+
+    # Parse command-line args
+    args = parser.parse_args()
+    return args
+
+
+def main():
+
+    # Display version information
+    print('AGCT ({})'.format(__version__))
+
+    # Collect args for sub-command
+    args = parsed_arguments()
+
+    # Mediator method to call sub-command's set handler function
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()
