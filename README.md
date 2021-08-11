@@ -1,7 +1,7 @@
 
 # Improving-Software-FAIRness-and-Reproducibility-with-Automated-Containerization-of-GitHub-Repositori
 
-![Logo](AGCT.png)
+![Logo](assets/AGCT.png)
 
 # What is AGCT?
 AGCT is a Python package that leverages the container image builder [Dockta](https://github.com/stencila/dockta) to automate the containerization of R- and Python-based GitHub repositories.
