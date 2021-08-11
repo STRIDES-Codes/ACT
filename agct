@@ -62,38 +62,47 @@ def bash(cmd, interpreter='/bin/bash', strict=True, cwd='/home/', **kwargs):
 
 
 def build(sub_args):
+    """Creates a docker image from GitHub repository
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    repo_url = sub_args.repo_url
+    img_name = sub_args.img_name
+    output = sub_args.output
+    skip_build = sub_args.skip_build
+    base_image = sub_args.base_image
+    use_dockta_reqs = sub_args.use_dockta_reqs
 
-    repo_name = sub_args.repo_url.split('/')[-1].split('.git')[0]
-    repo_dir = os.path.join(sub_args.output, repo_name)
-    repo_dir_lowercase = os.path.join(sub_args.output, repo_name.lower())
+    repo_name = repo_url.split('/')[-1].split('.git')[0]
+    repo_dir = os.path.join(output, repo_name)
+    repo_dir_lowercase = os.path.join(output, repo_name.lower())
 
-    print('Repository url: {}'.format(sub_args.repo_url))
-    print('Image name: {}'.format(sub_args.img_name))
+    print('Repository url: {}'.format(repo_url))
+    print('Image name: {}'.format(img_name))
     print('Repo directory: {}'.format(repo_dir))
     print('Starting build..')
 
-    if (not os.path.isdir(sub_args.output)):
-        os.mkdir(sub_args.output)
+    if (not os.path.isdir(output)):
+        os.mkdir(output)
 
     if (os.path.isdir(repo_dir_lowercase) or os.path.isdir(repo_dir)):
         warnings.warn('Repo directory already exists, skipping clone..')
     else:
-        bash('git -C {0} clone {1}'.format(sub_args.output, sub_args.repo_url))
+        bash('git -C {0} clone {1}'.format(output, repo_url))
 
     # Workaround for lowercase repo name requirement
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
     
-    if (sub_args.use_dockta_reqs):
+    if (use_dockta_reqs):
         bash('rm {}'.format(os.path.join(repo_dir_lowercase, 'requirements.txt')))
 
-    bash('dockta compile --from {0} {1}'.format(sub_args.base_image,repo_dir_lowercase))
+    bash('dockta compile --from {0} {1}'.format(base_image,repo_dir_lowercase))
 
-    if (not sub_args.skip_build):
-        bash('docker build --no-cache -f .Dockerfile --tag={} .'.format(sub_args.img_name), 
+    if (not skip_build):
+        bash('docker build --no-cache -f .Dockerfile --tag={} .'.format(img_name), 
                                                                         cwd=repo_dir_lowercase)
     return
-
 
 def push(sub_args):
     """Pushes a local docker image to a Docker Registry.
@@ -101,7 +110,12 @@ def push(sub_args):
         Parsed arguments for run sub-command
     """
     print(sub_args)
-    pass
+    img_name = sub_args.img_name
+    registry = sub_args.registry
+    tag = sub_args.tag
+
+    bash('docker push {}'.format(img_name))
+    return
 
 
 def parsed_arguments():
