@@ -18,7 +18,7 @@ AGCT is a Python package that leverages the container image builder [Dockta](htt
 
 # Usage
 ## Input (URL)
-## Output (Docker file)
+## Output (Dockerfile)
 ## Image Registries
 
 # How to cite
