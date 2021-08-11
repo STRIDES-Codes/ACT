@@ -101,7 +101,6 @@ def build(sub_args):
 
     bash('dockta compile --from {0} {1}'.format(base_image,repo_dir_lowercase))
 
-
     if (not skip_build):
         bash('docker build --no-cache -f .Dockerfile --tag={} .'.format(img_name), 
                                                                         cwd=repo_dir_lowercase)
