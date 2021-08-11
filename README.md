@@ -1,5 +1,5 @@
 
-# Improving-Software-FAIRness-and-Reproducibility-with-Automated-Containerization-of-GitHub-Repositori
+# Improving Software FAIRness and Reproducibility with Automated Containerization of GitHub Repository
 
 ![Logo](assets/AGCT.png)
 
