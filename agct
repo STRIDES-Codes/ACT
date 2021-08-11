@@ -108,7 +108,7 @@ def build(sub_args):
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
 
-    bash('dockta build {}'.format(repo_dir_lowercase))
+    bash('dockta build {} --from ubuntu:18.04'.format(repo_dir_lowercase))
     return
 
 
