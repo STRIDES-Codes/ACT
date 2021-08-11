@@ -108,7 +108,7 @@ def build(sub_args):
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
     
-    # base_image="ubuntu:18.04"
+    base_image="ubuntu:18.04"
     bash('dockta build --from {0} {1}'.format(sub_args.base_image,repo_dir_lowercase))
     return
 
