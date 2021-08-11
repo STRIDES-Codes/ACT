@@ -136,3 +136,9 @@ dmypy.json
 # Other 
 *.tmp
 *.bak
+
+
+# Dockta files
+.Dockerfile 
+.environ.jsonld 
+.requirements.txt 
