@@ -107,8 +107,9 @@ def build(sub_args):
     # Workaround for lowercase repo name requirement
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
-
-    bash('dockta build {}'.format(repo_dir_lowercase))
+    
+    # base_image="ubuntu:18.04"
+    bash('dockta build --from {0} {1}'.format(sub_args.base_image,repo_dir_lowercase))
     return
 
 
@@ -150,6 +151,7 @@ def parsed_arguments():
     # description below should be updated (i.e. update usage and add new option)
     required_build_options = textwrap.dedent("""\
         usage: agct build [-h] [--skip-build]
+                               [--base-image BASE_IMG]
                                --repo-url REPO_URL
                                --img-name IMG_NAME
                                --output OUTPUT
@@ -221,7 +223,12 @@ def parsed_arguments():
                                 required = False,
                                 default = False,
                                 help = 'only create a Dockerfile, skips docker build')
-
+    # set dockta base image ... defaults to ubuntu:18.04
+    subparser_build.add_argument('--base-image',
+                                type = str,
+                                required = False,
+                                default = "ubuntu:18.04",
+                                help = 'base image to use for Docker')
     # Options for the "push" sub-command
     # Grouped sub-parser arguments are currently not supported by argparse.
     # https://bugs.python.org/issue9341
