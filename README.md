@@ -20,10 +20,16 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 # Usage
 
-Step 1) Install the tool by cloning the repository
+Step 1)
+
+Install the tool by cloning the repository
+
 Step 2)
+
 Run ./agct -h to check the usage for running the tool
+
 ./agct build -h --> help for build command (pass in arguments)
+
 ./agct push -h --> help for push command (pass in arguments)
 
 ## Input (URL)
