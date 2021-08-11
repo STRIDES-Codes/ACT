@@ -94,10 +94,16 @@ def build(sub_args):
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
     
+<<<<<<< HEAD
     if (use_dockta_reqs):
         bash('rm {}'.format(os.path.join(repo_dir_lowercase, 'requirements.txt')))
 
     bash('dockta compile --from {0} {1}'.format(base_image,repo_dir_lowercase))
+=======
+    # base_image="ubuntu:18.04"
+    bash('dockta build --from {0} {1}'.format(sub_args.base_image,repo_dir_lowercase))
+    return
+>>>>>>> 03ef74bc696d4fcad1d93953774001602048269c
 
     if (not skip_build):
         bash('docker build --no-cache -f .Dockerfile --tag={} .'.format(img_name), 
