@@ -26,7 +26,7 @@ import warnings
 __version__ = 'v1.0.0'
 
 
-def bash(cmd, interpreter='/bin/bash', strict=True, **kwargs):
+def bash(cmd, interpreter='/bin/bash', strict=True, cwd='/home/', **kwargs):
     """
     Interface to run a process or bash command. Using subprocess.call_check()
     due to portability across most python versions. It was introduced in python 2.5
@@ -50,7 +50,7 @@ def bash(cmd, interpreter='/bin/bash', strict=True, **kwargs):
     # set -o pipefail: exits if a error occurs in any point of a pipeline
     if strict: prefix = 'set -euo pipefail; '
 
-    exitcode = subprocess.check_call(prefix + cmd, shell = True, executable = interpreter, **kwargs)
+    exitcode = subprocess.check_call(prefix + cmd, shell=True, executable=interpreter, cwd=cwd, **kwargs)
 
     if exitcode != 0: 
         fatal("""\n\tFatal: Failed to run '{}' command!
@@ -62,56 +62,53 @@ def bash(cmd, interpreter='/bin/bash', strict=True, **kwargs):
 
 
 def build(sub_args):
-    """Creates a Dockerfile for a github repository and build the docker image
+    """Creates a docker image from GitHub repository
     @param sub_args <parser.parse_args() object>:
-        Parsed arguments for build sub-command
-
-
-          --repo-url REPO_URL   URL of the Github repository to build 
-                                an Docker image.
-
-          --img-name IMG_NAME   Name of the local docker image to be 
-                                built. This image name can be provided 
-                                to the push sub command to push the 
-                                image to a Docker Registry.  
-
-          --output OUTPUT       Path to an output directory. This 
-                                path is where AGCT will clone the 
-                                Github repository and create the 
-                                Dockerfile. If the provided output 
-                                directory does not exist, it will 
-                                be created automatically. 
-                                After the build sub command completes, 
-                                a Dockerfile will be created in the 
-                                user provided output directory and a
-                                local Docker image will be built. 
-
+        Parsed arguments for run sub-command
     """
-    repo_name = sub_args.repo_url.split('.')[-2].split('/')[-1]
-    repo_dir = os.path.join(sub_args.output, repo_name)
-    repo_dir_lowercase = os.path.join(sub_args.output, repo_name.lower())
+    repo_url = sub_args.repo_url
+    img_name = sub_args.img_name
+    output = sub_args.output
+    skip_build = sub_args.skip_build
+    base_image = sub_args.base_image
+    use_dockta_reqs = sub_args.use_dockta_reqs
 
-    print('Repository url: {}'.format(sub_args.repo_url))
-    print('Image name: {}'.format(sub_args.img_name))
+    repo_name = repo_url.split('/')[-1].split('.git')[0]
+    repo_dir = os.path.join(output, repo_name)
+    repo_dir_lowercase = os.path.join(output, repo_name.lower())
+
+    print('Repository url: {}'.format(repo_url))
+    print('Image name: {}'.format(img_name))
     print('Repo directory: {}'.format(repo_dir))
     print('Starting build..')
 
-    if (not os.path.isdir(sub_args.output)):
-        os.mkdir(sub_args.output)
+    if (not os.path.isdir(output)):
+        os.mkdir(output)
 
     if (os.path.isdir(repo_dir_lowercase) or os.path.isdir(repo_dir)):
         warnings.warn('Repo directory already exists, skipping clone..')
     else:
-        bash('git -C {0} clone {1}'.format(sub_args.output, sub_args.repo_url))
+        bash('git -C {0} clone {1}'.format(output, repo_url))
 
     # Workaround for lowercase repo name requirement
     if (os.path.isdir(repo_dir)):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
     
+<<<<<<< HEAD
+    if (use_dockta_reqs):
+        bash('rm {}'.format(os.path.join(repo_dir_lowercase, 'requirements.txt')))
+
+    bash('dockta compile --from {0} {1}'.format(base_image,repo_dir_lowercase))
+=======
     # base_image="ubuntu:18.04"
     bash('dockta build --from {0} {1}'.format(sub_args.base_image,repo_dir_lowercase))
     return
+>>>>>>> 03ef74bc696d4fcad1d93953774001602048269c
 
+    if (not skip_build):
+        bash('docker build --no-cache -f .Dockerfile --tag={} .'.format(img_name), 
+                                                                        cwd=repo_dir_lowercase)
+    return
 
 def push(sub_args):
     """Pushes a local docker image to a Docker Registry.
@@ -119,7 +116,12 @@ def push(sub_args):
         Parsed arguments for run sub-command
     """
     print(sub_args)
-    pass
+    img_name = sub_args.img_name
+    registry = sub_args.registry
+    tag = sub_args.tag
+
+    bash('docker push {}'.format(img_name))
+    return
 
 
 def parsed_arguments():
@@ -152,6 +154,7 @@ def parsed_arguments():
     required_build_options = textwrap.dedent("""\
         usage: agct build [-h] [--skip-build]
                                [--base-image BASE_IMG]
+                               [--use-dockta-reqs]
                                --repo-url REPO_URL
                                --img-name IMG_NAME
                                --output OUTPUT
@@ -163,24 +166,24 @@ def parsed_arguments():
         repository.  
 
         required arguments:
-          --repo-url REPO_URL   URL of the Github repository to build 
-                                an Docker image.
+          --repo-url REPO_URL       URL of the Github repository to build 
+                                    an Docker image.
 
-          --img-name IMG_NAME   Name of the local docker image to be 
-                                built. This image name can be provided 
-                                to the push sub command to push the 
-                                image to a Docker Registry.  
+          --img-name IMG_NAME       Name of the local docker image to be 
+                                    built. This image name can be provided 
+                                    to the push sub command to push the 
+                                    image to a Docker Registry.  
 
-          --output OUTPUT       Path to an output directory. This 
-                                path is where AGCT will clone the 
-                                Github repository and create the 
-                                Dockerfile. If the provided output 
-                                directory does not exist, it will 
-                                be created automatically. 
-                                After the build sub command completes, 
-                                a Dockerfile will be created in the 
-                                user provided output directory and a
-                                local Docker image will be built. 
+          --output OUTPUT           Path to an output directory. This 
+                                    path is where AGCT will clone the 
+                                    Github repository and create the 
+                                    Dockerfile. If the provided output 
+                                    directory does not exist, it will 
+                                    be created automatically. 
+                                    After the build sub command completes, 
+                                    a Dockerfile will be created in the 
+                                    user provided output directory and a
+                                    local Docker image will be built. 
         """)
 
     # Display example usage in epilog
@@ -228,7 +231,14 @@ def parsed_arguments():
                                 type = str,
                                 required = False,
                                 default = "ubuntu:18.04",
-                                help = 'base image to use for Docker')
+                                help = 'Base Image to use in the dockerfile, \
+                                        defaults to ubuntu 18.04')
+    subparser_build.add_argument('--use-dockta-reqs',
+                                action = 'store_true',
+                                required = False,
+                                default = False,
+                                help = 'Use dockta generated .requirements.txt')
+    
     # Options for the "push" sub-command
     # Grouped sub-parser arguments are currently not supported by argparse.
     # https://bugs.python.org/issue9341
