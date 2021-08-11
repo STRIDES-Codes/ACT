@@ -161,7 +161,7 @@ def parsed_arguments():
                                 type = str,
                                 required = True,
                                 help = argparse.SUPPRESS)
-    # Name of locally built Docker Image 
+    # Name of locally built Docker Image
     subparser_build.add_argument('--img-name',
                                 type = str,
                                 required = True,
@@ -230,7 +230,7 @@ def parsed_arguments():
                                             formatter_class=argparse.RawDescriptionHelpFormatter,
                                             description = required_push_options,
                                             epilog = push_epilog)
-    # Name of locally built Docker Image 
+    # Name of locally built Docker Image
     subparser_push.add_argument('--img-name',
                                 type = str,
                                 required = True,
