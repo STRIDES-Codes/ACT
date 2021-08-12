@@ -93,7 +93,7 @@ def build(sub_args):
         bash('git -C {0} clone {1}'.format(output, repo_url))
 
     # Workaround for lowercase repo name requirement
-    if (os.path.isdir(repo_dir)):
+    if (os.path.isdir(repo_dir) and not repo_dir.split('/')[-1].islower()):
         bash('mv {0} {1}'.format(repo_dir, repo_dir_lowercase))
     
     # Do not use the users defined requirements
