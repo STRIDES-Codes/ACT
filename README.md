@@ -13,19 +13,20 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ![Schematic](assets/ACT_Workflow.png)
 
-## Installation and Setup
-### Docker image
-**ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is **_the simplest way_** to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the Docker website to [install Docker Engine](https://docs.docker.com/engine/install/).
+##Installation and Setup
 
-Once Docker Engine is installed, **ACT** can be run as follows:
+There are three ways to install and run ACT.  ACT has a pre-built Docker image on Docker Hub. Using the ACT Docker image is the simplest way to run ACT—you need only Docker Engine installed on your computer. 
+
+### 1. Using the Docker Image directly 
+#### Please follow the instructions on the Docker website to install Docker Engine.
+####Once Docker Engine is installed, ACT can be run as follows:
 
 ```
 $ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
 ```
 
-### Dockerfile
 
-A local docker image can be built using the provided [Dockerfile](https://raw.githubusercontent.com/STRIDES-Codes/ACT/main/Dockerfile). You will need to [install Docker Engine](https://docs.docker.com/engine/install/) on your computer to build a Docker image.
+### 2. Build a Docker image locally using the Dockerfile provided in this repository. A local docker image can be built using the provided Dockerfile. You will need to install Docker Engine on your computer to build a Docker image.   
 
 Once you have a local copy of the Dockerfile and you have Docker Engine installed, you can build the docker image like this:
 
@@ -39,8 +40,24 @@ REPOSITORY    TAG    IMAGE ID    CREATED    SIZE
 strides_act    <none>    32f43784742c    22 minutes ago    1.08GB
 ```
 
-### Local install
-If you wish to install a local copy of **ACT**, then you can run [this script](https://raw.githubusercontent.com/STRIDES-Codes/ACT/VK/utils/autocontainer-setup.sh) in our repository. We highly recommend using our Docker image for running **ACT**.
+
+### 3. As an alternative, if you wish to install a local copy of ACT, then you can run this script in our repository. We highly recommend using our Docker image, as described above, for running ACT.
+#### Dependencies for local installation
+
+#####Install Node.js:
+```
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs```
+
+#####Install Dockta via the Node package manager (npm): 
+```sudo npm install --global @stencila/dockta```
+
+#####Install Python 3 (Python 3.5 or greater):
+```sudo apt install python3.8```
+
+#####Obtain ACT:
+```git clone https://github.com/STRIDES-Codes/ACT.git```
+
 
 ## Usage
 
