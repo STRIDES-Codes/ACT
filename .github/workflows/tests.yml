@@ -1,0 +1,31 @@
+name: tests
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'act'
+      - 'src/**'
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2	    
+      - uses: docker://nciccbr/strides_act:latest
+      - name: Create Dockerfile
+        run: |
+          docker run -v /var/run/docker.sock:/var/run/docker.sock \
+          -v $PWD:/data2 \
+          nciccbr/strides_act:v1.1.0 agct build \
+          --repo-url https://github.com/CCBR/AAsap.git \
+          --img-name ccbr_aasap --output /data2/test/ \
+          --skip-build
+      - name: View Dockerfile
+        run: |
+          cat /data2/test/aasap/.Dockerfile
+        
+
+
+
