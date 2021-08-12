@@ -16,7 +16,7 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ![Schematic](assets/ACT_Workflow.png)
 
-## Installation, Setup and Execution
+## Installation and Setup
 ### Docker image
 **ACT** has a pre-built docker image in [dockerhub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Running **ACT** using this docker image is the easiest way to run docker. In order to run the **ACT** docker image all you need is the docker engine installed on your computer. Please follow the instructions on the docker's [website](https://docs.docker.com/engine/install/) to install docker engine.
 
@@ -42,10 +42,10 @@ REPOSITORY    TAG    IMAGE ID    CREATED    SIZE
 strides_act    <none>    32f43784742c    22 minutes ago    1.08GB
 ```
 
+### Local install
+If you wish to install a local copy of **ACT**, then you can run [this](https://raw.githubusercontent.com/STRIDES-Codes/ACT/VK/utils/autocontainer-setup.sh) script in our repo. We highly recommend using our docker image for running **ACT**.
 
-## PIP
-
-# Usage
+## Usage
 
 ## Help menu:
 ```./agct -h```
