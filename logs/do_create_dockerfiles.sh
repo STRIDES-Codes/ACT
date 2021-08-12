@@ -18,7 +18,7 @@ while read repo; do
     name=$(echo "$repo" | awk -F '/' '{print $NF}' | sed 's/.git$//')
     # Run ACT to create dockerfile
     # Get exitcode of command
-    exitcode=$(../agct \
+    exitcode=$(../act \
                     build \
                     --repo-url "${repo}" \
                     --img-name "${name}" \
