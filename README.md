@@ -1,16 +1,12 @@
+## Introduction
+Improving the findability, accessibility, interoperability and reusability is a key component in moving towards greater reproducibility in computational biomedical research. For the past six years, NCBI Codeathons (formerly NCBI Hackathons) have generated more than 300 computational tools and software packages in its GitHub repositories. As the number of repositories increases, it has become more challenging to find, access, use and reuse these very useful tools. 
+In this project, we developed **A**utomated **C**ontainerization **T**ool (ACT) to automatically create a Dockerfile or a Docker image for R- and Python-based repositories using an open-source tool (Dockta)[https://github.com/stencila/dockta], which also leverages standard vocabularies to enable greater discoverability of these tools. Containerization is the process to package software code along with all the dependencies needed to run that code allowing that application to be deployed reproducibly on any platform.  By encapsulating the entire analytical environment using containers, ACT can be implemented for any individual or organizational GitHub repositories to further improve the findability, accessibility, itneroperability, and reusability of these tools.
 
-# Improving Software FAIRness and Reproducibility with Automated Containerization of GitHub Repositories
 
 ![Logo](assets/ACT.png)
 
 ## What is ACT?
 ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leverages the container image builder [Dockta](https://github.com/stencila/dockta) to automate the containerization of R- and Python-based GitHub repositories.
-
-## What is containerization?
-
-## The problem of software FAIRness and Reproducibility
-
-## Why should this issue be addressed? (Introduction)
 
 ## The AGCT Workflow
 
