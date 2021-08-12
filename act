@@ -3,12 +3,12 @@
 
 """ACT: Automated Containerization Tool
 About:
-    This is the main entry for agct.
+    This is the main entry for act.
 USAGE:
-	$ agct <build|push> [OPTIONS]
+	$ act <build|push> [OPTIONS]
 Example:
-    $ agct build -h
-    $ agct push -h
+    $ act build -h
+    $ act push -h
 """
 
 from __future__ import print_function
@@ -186,7 +186,7 @@ def parsed_arguments():
     # options that are required! Please note: if a required arg is added the
     # description below should be updated (i.e. update usage and add new option)
     required_build_options = textwrap.dedent("""\
-        usage: agct build [-h] [--skip-build]
+        usage: act build [-h] [--skip-build]
                                [--base-img BASE_IMG]
                                [--use-dockta-reqs]
                                --repo-url REPO_URL
@@ -224,7 +224,7 @@ def parsed_arguments():
     build_epilog = textwrap.dedent("""\
         example:
           # Step 1.) Create Dockerfile and build the docker image.
-          agct build --repo-url https://github.com/CCBR/AAsap \\
+          act build --repo-url https://github.com/CCBR/AAsap \\
                      --img-name ccbr_aasap \\
                      --output /home/$USER/scratch/
 
@@ -280,7 +280,7 @@ def parsed_arguments():
     # options that are required! Please note: if a required arg is added the
     # description below should be updated (i.e. update usage and add new option)
     required_push_options = textwrap.dedent("""\
-        usage: agct push [-h] [--tag TAG]
+        usage: act push [-h] [--tag TAG]
                               --img-name IMG_NAME 
                               --registry REGISTRY
 
@@ -310,7 +310,7 @@ def parsed_arguments():
     push_epilog = textwrap.dedent("""\
         example:
           # Step 1.) Push local docker image to DockerHub.
-          agct push  --img-name ccbr_aasap \\
+          act push  --img-name ccbr_aasap \\
                      --registry nciccbr \\
                      --tag v1.0.0
 
@@ -343,8 +343,8 @@ def parsed_arguments():
 
     # Sanity check for user command line arguments 
     if len(sys.argv) < 2:
-        parser.error("""\n\t └── Fatal: failed to provide a valid sub command to agct!
-             Please run 'agct  -h' to view more information about agct's usage.""".format(
+        parser.error("""\n\t └── Fatal: failed to provide a valid sub command to act!
+             Please run 'act  -h' to view more information about act's usage.""".format(
                 sys.argv[0])
         )
 
