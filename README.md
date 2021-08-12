@@ -17,10 +17,10 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 ### Docker image
 **ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is **_the simplest way_** to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the Docker website to [install Docker Engine](https://docs.docker.com/engine/install/).
 
-Once Docker Engine is installed, **ACT** can be run as follows:
+Once Docker Engine is installed, **ACT** can be run as shown in the following example:
 
 ```
-$ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
+$ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act act build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
 ```
 
 ### Dockerfile
@@ -45,17 +45,127 @@ If you wish to install a local copy of **ACT**, then you can run [this script](h
 ## Usage
 
 ### Help menu:
-```./agct -h```
+```
+$ act --help
+Automated Containerization Tool (ACT v1.0.0)
+usage: act [-h] [--version] {build,push} ...
+
+ACT: Automated GitHub Containerization Tool
+
+positional arguments:
+  {build,push}  List of available sub-commands
+    build       Creates Dockerfile and builds Docker image.
+    push        Push local Docker image to a Registry
+
+optional arguments:
+  -h, --help    show this help message and exit
+  --version     show program's version number and exit
+```
 
 ### Build command (required arguments):
-```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY```
+```
+./act build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY
+```
 
-More options and help? ```./agct build -h```
+You can get detailed help about the arguments using 
+```./act build --help
+Automated Containerization Tool (ACT v1.0.0)
+usage: act build [-h] [--skip-build]
+                       [--base-img BASE_IMG]
+                       [--use-dockta-reqs]
+                       --repo-url REPO_URL
+                       --img-name IMG_NAME
+                       --output OUTPUT
+
+Creates a Dockerfile for a Github repository and builds the
+local Docker image. Please see the push sub command to push
+a local image to a Docker Registry. The build sub command
+takes a Github URL and a output directory to clone the Github
+repository.
+
+required arguments:
+  --repo-url REPO_URL       URL of the Github repository to build
+                            an Docker image.
+
+  --img-name IMG_NAME       Name of the local docker image to be
+                            built. This image name can be provided
+                            to the push sub command to push the
+                            image to a Docker Registry.
+
+  --output OUTPUT           Path to an output directory. This
+                            path is where ACT will clone the
+                            Github repository and create the
+                            Dockerfile. If the provided output
+                            directory does not exist, it will
+                            be created automatically.
+                            After the build sub command completes,
+                            a Dockerfile will be created in the
+                            user provided output directory and a
+                            local Docker image will be built.
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --skip-build         Only create a Dockerfile, skips docker build.
+  --base-img BASE_IMG  Base image to use in the Dockerfile,
+                       default=ubuntu:18.04.
+  --use-dockta-reqs    Use dockta generated ".requirements.txt" file.
+
+example:
+  # Step 1.) Create Dockerfile and build the docker image.
+  act build --repo-url https://github.com/CCBR/AAsap \
+             --img-name ccbr_aasap \
+             --output /home/$USER/scratch/
+
+version:
+  v1.0.0
+```
 
 ### Push command (required arguments):
-```./agct push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
+```
+$ ./act push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName
+```
 
-More options and help? ```./agct push -h```
+You can get detailed help about the arguments using
+```
+$ ./act push --help
+Automated Containerization Tool (ACT v1.0.0)
+usage: act push [-h] [--tag TAG]
+                      --img-name IMG_NAME
+                      --registry REGISTRY
+
+Pushes a local docker image to a Docker registry. Please
+see the build sub command to for information on how to build
+a local Docker image. The push sub command takes the name of
+a local image, a Docker registry prefix, and a optional tag
+to tag and push an image to a registry like Dockerhub.
+
+required arguments:
+  --img-name IMG_NAME   Name of the local docker image to be
+                        pushed to a Docker registry. This image
+                        name was defined via the '--img-name'
+                        option of the build sub command.
+                        Please see the build sub command
+                        for more information.
+
+  --registry REGISTRY   Docker registry prefix. If pushing
+                        an image to a user account on DockerHub,
+                        this will be the user's DockerHub username.
+                        If push to a org account, this will be the
+                        name of the Dockerhub organization.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --tag TAG   Tag for Docker image, defaults to latest.
+
+example:
+  # Step 1.) Push local docker image to DockerHub.
+  act push  --img-name ccbr_aasap \
+             --registry nciccbr \
+             --tag v1.0.0
+
+version:
+  v1.0.0
+```
 
 ## Input (URL)
 ## Output (Dockerfile)
