@@ -1,5 +1,5 @@
 
-# Improving Software FAIRness and Reproducibility with Automated Containerization of GitHub Repository
+# Improving Software FAIRness and Reproducibility with Automated Containerization of GitHub Repositories
 
 ![Logo](assets/ACT.png)
 
@@ -14,23 +14,26 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 # The AGCT Workflow
 
+![Schematic](assets/ACT_Workflow.png)
+
 # Installation and set up
 ## Dockerfile
 ## PIP
 
 # Usage
 
-Step 1)
+## Help menu:
+```./agct -h```
 
-Install the tool by cloning the repository
+## Build command (required arguments):
+```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OP/DIRECTORY```
 
-Step 2)
+More options and help? ```./agct build -h```
 
-Run ./agct -h to check the usage for running the tool
+## Push command (required arguments):
+```./agct push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
 
-./agct build -h --> help for build command (pass in arguments)
-
-./agct push -h --> help for push command (pass in arguments)
+More options and help? ```./agct push -h```
 
 ## Input (URL)
 ## Output (Dockerfile)
