@@ -18,24 +18,24 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ## Installation and Setup
 ### Docker image
-**ACT** has a pre-built docker image in [dockerhub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Running **ACT** using this docker image is the easiest way to run docker. In order to run the **ACT** docker image all you need is the docker engine installed on your computer. Please follow the instructions on the docker's [website](https://docs.docker.com/engine/install/) to install docker engine.
+**ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is the simplest way to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the [Docker website](https://docs.docker.com/engine/install/) to install Docker Engine.
 
-Once, docker engine is install you can run **ACT** list this:
+Once Docker Engine is installed **ACT** can be run as follows:
 
 ```
-$ docker run  -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
+$ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
 ```
 
 ### Dockerfile
 
-A local docker image can be built using the provided [Dockerfile](https://raw.githubusercontent.com/STRIDES-Codes/ACT/main/Dockerfile). You will need docker engine installed on your computer for building a docker image. Please follow the instructions on the docker's [website](https://docs.docker.com/engine/install/) to install docker engine.
+A local docker image can be built using the provided [Dockerfile](https://raw.githubusercontent.com/STRIDES-Codes/ACT/main/Dockerfile). You will need Docker Engine installed on your computer for building a Docker image. Please follow the instructions the [Docker website](https://docs.docker.com/engine/install/) to install Docker Engine.
 
-Once you have a local copy of the Dockerfile and you have docker engine installed, you build the docker image list this:
+Once you have a local copy of the Dockerfile and you have Docker Engine installed, you build the docker image like this:
 
 ```
 $ docker build -f Dockerfile --no-cache -t strides_act .
 ```
-If all goes well, you should be able to list the docker image *strides_act* using:
+If all goes well, you should be able to list the Docker image *strides_act* using:
 ```
 $ docker image ls
 REPOSITORY    TAG    IMAGE ID    CREATED    SIZE
@@ -43,7 +43,7 @@ strides_act    <none>    32f43784742c    22 minutes ago    1.08GB
 ```
 
 ### Local install
-If you wish to install a local copy of **ACT**, then you can run [this](https://raw.githubusercontent.com/STRIDES-Codes/ACT/VK/utils/autocontainer-setup.sh) script in our repo. We highly recommend using our docker image for running **ACT**.
+If you wish to install a local copy of **ACT**, then you can run [this script](https://raw.githubusercontent.com/STRIDES-Codes/ACT/VK/utils/autocontainer-setup.sh) in our repository. We highly recommend using our Docker image for running **ACT**.
 
 ## Usage
 
@@ -51,7 +51,7 @@ If you wish to install a local copy of **ACT**, then you can run [this](https://
 ```./agct -h```
 
 ## Build command (required arguments):
-```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OP/DIRECTORY```
+```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY```
 
 More options and help? ```./agct build -h```
 
