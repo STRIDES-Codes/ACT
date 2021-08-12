@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-"""AGCT: Automated GitHub Containerization Tool
+"""ACT: Automated Containerization Tool
 About:
     This is the main entry for agct.
 USAGE:
@@ -159,7 +159,7 @@ def parsed_arguments():
     """
 
     # Create a top-level parser
-    parser = argparse.ArgumentParser(description = 'AGCT: \
+    parser = argparse.ArgumentParser(description = 'ACT: \
                                                     Automated GitHub Containerization Tool')
 
     # Adding Verison information
@@ -198,7 +198,7 @@ def parsed_arguments():
                                     image to a Docker Registry.  
 
           --output OUTPUT           Path to an output directory. This 
-                                    path is where AGCT will clone the 
+                                    path is where ACT will clone the 
                                     Github repository and create the 
                                     Dockerfile. If the provided output 
                                     directory does not exist, it will 
@@ -212,7 +212,7 @@ def parsed_arguments():
     # Display example usage in epilog
     build_epilog = textwrap.dedent("""\
         example:
-          # Step 1.) Create Dockerfile and build the docker image
+          # Step 1.) Create Dockerfile and build the docker image.
           agct build --repo-url https://github.com/CCBR/AAsap \\
                      --img-name ccbr_aasap \\
                      --output /home/$USER/scratch/
@@ -248,19 +248,19 @@ def parsed_arguments():
                                 action = 'store_true',
                                 required = False,
                                 default = False,
-                                help = 'only create a Dockerfile, skips docker build')
+                                help = 'Only create a Dockerfile, skips docker build.')
     # set dockta base image ... defaults to ubuntu:18.04
     subparser_build.add_argument('--base-img',
                                 type = str,
                                 required = False,
                                 default = "ubuntu:18.04",
-                                help = 'Base Image to use in the dockerfile, \
-                                        default=ubuntu:18.04')
+                                help = 'Base image to use in the Dockerfile, \
+                                        default=ubuntu:18.04.')
     subparser_build.add_argument('--use-dockta-reqs',
                                 action = 'store_true',
                                 required = False,
                                 default = False,
-                                help = 'Use dockta generated .requirements.txt')
+                                help = 'Use dockta generated ".requirements.txt" file.')
     
     # Options for the "push" sub-command
     # Grouped sub-parser arguments are currently not supported by argparse.
@@ -298,7 +298,7 @@ def parsed_arguments():
     # Display example usage in epilog
     push_epilog = textwrap.dedent("""\
         example:
-          # Step 1.) Push local docker image to DockerHub
+          # Step 1.) Push local docker image to DockerHub.
           agct push  --img-name ccbr_aasap \\
                      --registry nciccbr \\
                      --tag v1.0.0
@@ -328,7 +328,7 @@ def parsed_arguments():
     subparser_push.add_argument('--tag',
                                 required = False,
                                 default = '',
-                                help = 'Tag for Docker image, defaults to latest')
+                                help = 'Tag for Docker image, defaults to latest.')
 
     # Sanity check for user command line arguments 
     if len(sys.argv) < 2:
@@ -350,7 +350,7 @@ def main():
 
     # Display version information
     if '--version' not in sys.argv:
-        print('AGCT ({})'.format(__version__))
+        print('ACT ({})'.format(__version__))
 
     # Collect args for sub-command
     args = parsed_arguments()
