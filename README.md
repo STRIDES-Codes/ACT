@@ -19,7 +19,7 @@ There are three ways to install and run ACT.  ACT has a pre-built Docker image o
 #### Once Docker Engine is installed, ACT can be run as follows:
 
 ```
-$ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
+$ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 act build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
 ```
 
 
@@ -60,19 +60,24 @@ sudo apt-get install -y nodejs
 ## Usage
 
 ### Help menu:
-```./agct -h```
+```./act -h```
 
 ### Build command (required arguments):
-```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY```
+```./act build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY```
 
 More options and help? ```./agct build -h```
 
+**Input:**
+GitHub URL
+
+**Output:** 
+Dockerfile ```~/OUTPUT/DIRECTORY/Dockerfile```
+Docker image file accessible via Docker: ```docker image docker_image_name_lower_case ls```
+
 ### Push command (required arguments):
-```./agct push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
+```./act push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
 
-More options and help? 
-
-```./agct push -h```
+More options and help? ```./agct push -h```
 
 ## Input (URL)
 ## Output (Dockerfile)
