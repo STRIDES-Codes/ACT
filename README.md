@@ -20,7 +20,7 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 ### Docker image
 **ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is the simplest way to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the [Docker website](https://docs.docker.com/engine/install/) to install Docker Engine.
 
-Once Docker Engine is installed **ACT** can be run as follows:
+Once Docker Engine is installed, **ACT** can be run as follows:
 
 ```
 $ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
@@ -47,15 +47,15 @@ If you wish to install a local copy of **ACT**, then you can run [this script](h
 
 ## Usage
 
-## Help menu:
+### Help menu:
 ```./agct -h```
 
-## Build command (required arguments):
+### Build command (required arguments):
 ```./agct build --repo-url https://github.com/REPOSITORY/URL.git --img-name docker_image_name_lower_case --output ~/OUTPUT/DIRECTORY```
 
 More options and help? ```./agct build -h```
 
-## Push command (required arguments):
+### Push command (required arguments):
 ```./agct push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
 
 More options and help? ```./agct push -h```
