@@ -13,6 +13,7 @@ Example:
 
 from __future__ import print_function
 from genericpath import isdir
+from subprocess import CalledProcessError
 from src.utils import (initialize,
     fatal,
     err,
@@ -143,7 +144,17 @@ def push(sub_args):
     registry = sub_args.registry
     tag = sub_args.tag
 
-    bash('docker push {}'.format(img_name))
+    if (tag is None):
+        tag = 'latest'
+
+    bash('docker tag {1}:latest {0}/{1}:{2}'.format(registry,img_name,tag))
+
+    try:
+        bash('docker push {0}/{1}:{2}'.format(registry,img_name,tag))
+    except CalledProcessError as e:
+        print(e)
+        print('Please try running "$ docker login" first before pushing')
+
     return
 
 
