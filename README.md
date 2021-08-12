@@ -15,11 +15,11 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ## Installation and Setup
 
-There are three ways to install and run ACT.  ACT has a pre-built Docker image on Docker Hub. Using the ACT Docker image is the simplest way to run ACT—you need only Docker Engine installed on your computer. 
+There are three ways to install and run ACT.  ACT has a pre-built Docker image on Docker Hub. Using the ACT Docker image is the **simplest way** to run ACT — you need only Docker Engine installed on your computer. 
 
 ### 1. Using the Docker Image directly 
-#### Please follow the instructions on the Docker website to install Docker Engine.
-####Once Docker Engine is installed, ACT can be run as follows:
+#### Please follow the instructions on the [Docker website to install Docker Engine](https://docs.docker.com/engine/install/).
+#### Once Docker Engine is installed, ACT can be run as follows:
 
 ```
 $ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccbr/strides_act:v1.1.0 agct build --repo-url https://github.com/CCBR/AAsap.git --img-name ccbr_aasap --output /data2/AAsap
