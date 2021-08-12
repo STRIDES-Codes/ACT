@@ -361,7 +361,7 @@ def main():
 
     # Display version information
     if '--version' not in sys.argv:
-        print('ACT ({})'.format(__version__))
+        print('Automated Containerization Tool (ACT {})'.format(__version__))
 
     # Collect args for sub-command
     args = parsed_arguments()
