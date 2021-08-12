@@ -15,7 +15,7 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ## Installation and Setup
 ### Docker image
-**ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is the simplest way to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the [Docker website](https://docs.docker.com/engine/install/) to install Docker Engine.
+**ACT** has a pre-built Docker image on [Docker Hub](https://hub.docker.com/repository/docker/nciccbr/strides_act). Using the **ACT** Docker image is **_the simplest way_** to run **ACT**—you need only Docker Engine installed on your computer. Please follow the instructions on the Docker website to [install Docker Engine](https://docs.docker.com/engine/install/).
 
 Once Docker Engine is installed, **ACT** can be run as follows:
 
@@ -25,9 +25,9 @@ $ docker run -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/data2 nciccb
 
 ### Dockerfile
 
-A local docker image can be built using the provided [Dockerfile](https://raw.githubusercontent.com/STRIDES-Codes/ACT/main/Dockerfile). You will need Docker Engine installed on your computer for building a Docker image. Please follow the instructions the [Docker website](https://docs.docker.com/engine/install/) to install Docker Engine.
+A local docker image can be built using the provided [Dockerfile](https://raw.githubusercontent.com/STRIDES-Codes/ACT/main/Dockerfile). You will need to [install Docker Engine](https://docs.docker.com/engine/install/) on your computer to build a Docker image.
 
-Once you have a local copy of the Dockerfile and you have Docker Engine installed, you build the docker image like this:
+Once you have a local copy of the Dockerfile and you have Docker Engine installed, you can build the docker image like this:
 
 ```
 $ docker build -f Dockerfile --no-cache -t strides_act .
