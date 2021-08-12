@@ -25,9 +25,11 @@ while read repo_url;do
 	repo_org=$(echo $repo_url|awk -F"/" '{print $(NF-1)}')
 	subfolder=$(echo $repo_name|awk '{print tolower($0)}')
 	folder="${repo_clone_testing_folder}/${subfolder}"
-	is_python=$(file_exists_in_repo $folder ".requirements.txt")
-	is_R=$(file_exists_in_repo $folder "DESCRIPTION")
-			has_Dockerfile=$(file_exists_in_repo $folder "Dockerfile")
+	#is_python=$(file_exists_in_repo $folder ".requirements.txt")
+	is_python=$(file_exists_in_repo $folder "*requirements.txt")
+	#is_R=$(file_exists_in_repo $folder "DESCRIPTION")
+	is_R=$(file_exists_in_repo $folder "*DESCRIPTION")
+	has_Dockerfile=$(file_exists_in_repo $folder "Dockerfile")
 	has_dockta_Dockerfile=$(file_exists_in_repo $folder ".Dockerfile")
 	echo -ne "$repo_name\t$repo_org\t$is_python\t$is_R\t$has_Dockerfile\t$has_dockta_Dockerfile\n"
 #	exit
