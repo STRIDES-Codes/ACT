@@ -70,7 +70,9 @@ More options and help? ```./agct build -h```
 ### Push command (required arguments):
 ```./agct push --img-name docker_image_name_lower_case --registry DockerHub_UserName_OR_OrganizationName```
 
-More options and help? ```./agct push -h```
+More options and help? 
+
+```./agct push -h```
 
 ## Input (URL)
 ## Output (Dockerfile)
@@ -87,5 +89,6 @@ More options and help? ```./agct push -h```
 * Alec Peltekian
 * Jason Xie
 * Kimia Samieinejad
+
 # License
 MIT
