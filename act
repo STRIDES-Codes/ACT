@@ -275,7 +275,7 @@ def parsed_arguments():
                                 required = False,
                                 default = False,
                                 help = 'Use dockta generated ".requirements.txt" file.')
-    
+
     # Options for the "push" sub-command
     # Grouped sub-parser arguments are currently not supported by argparse.
     # https://bugs.python.org/issue9341
