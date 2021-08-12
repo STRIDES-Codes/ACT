@@ -142,3 +142,8 @@ dmypy.json
 .Dockerfile 
 .environ.jsonld 
 .requirements.txt 
+
+
+# Ignore logs
+logs/create_dockerfiles.log
+logs/tmp/
