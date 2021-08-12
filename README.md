@@ -13,7 +13,7 @@ ACT or **A**utomated **C**ontainerization **T**ool is a Python package that leve
 
 ![Schematic](assets/ACT_Workflow.png)
 
-##Installation and Setup
+## Installation and Setup
 
 There are three ways to install and run ACT.  ACT has a pre-built Docker image on Docker Hub. Using the ACT Docker image is the simplest way to run ACT—you need only Docker Engine installed on your computer. 
 
@@ -44,18 +44,19 @@ strides_act    <none>    32f43784742c    22 minutes ago    1.08GB
 ### 3. As an alternative, if you wish to install a local copy of ACT, then you can run this script in our repository. We highly recommend using our Docker image, as described above, for running ACT.
 #### Dependencies for local installation
 
-#####Install Node.js:
+##### Install Node.js:
 ```
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs```
+sudo apt-get install -y nodejs
+```
 
-#####Install Dockta via the Node package manager (npm): 
+##### Install Dockta via the Node package manager (npm): 
 ```sudo npm install --global @stencila/dockta```
 
-#####Install Python 3 (Python 3.5 or greater):
+##### Install Python 3 (Python 3.5 or greater):
 ```sudo apt install python3.8```
 
-#####Obtain ACT:
+##### Obtain ACT:
 ```git clone https://github.com/STRIDES-Codes/ACT.git```
 
 
